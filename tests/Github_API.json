@@ -1,0 +1,89 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Github API",
+		"_postman_id": "8a48f40d-f388-26d2-5974-1d828db62a75",
+		"description": "this is the collection for GITHUB API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Github  Root API",
+			"description": "",
+			"item": [
+				{
+					"name": "Root API Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const jsonData = JSON.parse(responseBody);\r",
+									"const usersURL = \"https://api.github.com/user\"\r",
+									"const emailsURL = \"https://api.github.com/user/emails\"\r",
+									"const followersURL = \"https://api.github.com/user/followers\"\r",
+									"const followingURL = \"https://api.github.com/user/following{/target}\"\r",
+									"\r",
+									"let {current_user_url, emails_url, followers_url, following_url} = jsonData\r",
+									"\r",
+									"// Tests go here\r",
+									"tests[\"Gets the correct users url\"] = current_user_url === usersURL;\r",
+									"tests[\"Gets the correct emails url\"] = emails_url === emailsURL;\r",
+									"tests[\"Gets the correct followers url\"] = followers_url === followersURL;\r",
+									"tests[\"Gets the correct following url\"] = following_url === followingURL;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://api.github.com/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This is the Root API request"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Github User Details",
+			"description": "",
+			"item": [
+				{
+					"name": "User Details Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"const { login } = jsonData;\r",
+									"\r",
+									"tests[\"Gets the correct username\"] = login === \"scotch-io\";\r",
+									"\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\r",
+									"\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{USERS_URL}}/{{USERNAME}}",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This is the User Details request"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
